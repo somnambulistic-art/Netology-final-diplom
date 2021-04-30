@@ -13,7 +13,10 @@ import os
 from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
-import backend.apps
+import usermanager.apps
+import shopmanager.apps
+import ordermanager.apps
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,10 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'backend.apps.BackendConfig',
+
     'rest_framework',
     'rest_framework.authtoken',
     'django_rest_passwordreset',
+
+    'usermanager.apps.UsermanagerConfig',
+    'shopmanager.apps.ShopmanagerConfig',
+    'ordermanager.apps.OrdermanagerConfig',
 ]
 
 MIDDLEWARE = [
@@ -132,11 +139,11 @@ STATIC_URL = '/static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-AUTH_USER_MODEL = 'backend.User'
+AUTH_USER_MODEL = 'usermanager.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 40,
+    'PAGE_SIZE': 5,
 
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
@@ -151,11 +158,10 @@ REST_FRAMEWORK = {
 }
 
 # Email Settings:
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'popelukexxiii@gmail.com'
-EMAIL_HOST_PASSWORD = 'NotRealPassword123'
+EMAIL_HOST_USER = 'popelukexxiii@gmail.com'  # email-адрес, с которого будет отправляться сообщение
+EMAIL_HOST_PASSWORD = 'NotRealPassword123'  # пароль от почтового ящика
 EMAIL_PORT = '465'
 EMAIL_USE_SSL = True
 SERVER_EMAIL = EMAIL_HOST_USER
