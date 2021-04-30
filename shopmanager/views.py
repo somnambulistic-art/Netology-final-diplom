@@ -158,6 +158,3 @@ class PartnerState(APIView):
 
         return JsonResponse({'Status': False,
                              'Errors': 'Не указаны все необходимые аргументы'})
-
-
-
