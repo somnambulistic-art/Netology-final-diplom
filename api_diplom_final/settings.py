@@ -45,9 +45,9 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_rest_passwordreset',
 
-    'usermanager.apps.UsermanagerConfig',
-    'shopmanager.apps.ShopmanagerConfig',
-    'ordermanager.apps.OrdermanagerConfig',
+    'usermanager',
+    'shopmanager',
+    'ordermanager',
 ]
 
 MIDDLEWARE = [
