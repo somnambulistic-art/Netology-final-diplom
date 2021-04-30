@@ -6,8 +6,7 @@ from ordermanager.views import OrderView, PartnerOrders, BasketView
 app_name = 'ordermanager'
 
 urlpatterns = [
-    path('order', OrderView.as_view(), name='order'),
     path('partner/orders', PartnerOrders.as_view(), name='partner-orders'),
+    path('order', OrderView.as_view(), name='order'),
     path('basket', BasketView.as_view(), name='basket'),
-
 ]
