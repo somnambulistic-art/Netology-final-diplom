@@ -1,1 +1,4 @@
 /venv/
+/ordermanager/migrations/
+/shopmanager/migrations/
+/usermanager/migrations/
