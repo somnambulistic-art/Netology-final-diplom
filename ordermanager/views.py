@@ -13,6 +13,8 @@ from usermanager.signals import new_order
 class OrderView(APIView):
     """ Класс для получения и размещения заказов пользователями. """
 
+    throttle_scope = 'user'
+
     def get(self, request, *args, **kwargs):
         """"
         Метод проверяет авторизацию,
@@ -64,6 +66,8 @@ class OrderView(APIView):
 class PartnerOrders(APIView):
     """ Класс для получения заказов поставщиками. """
 
+    throttle_scope = 'user'
+
     def get(self, request, *args, **kwargs):
         """
         Метод проверяет авторизацию и тип пользователя (для работы требуется тип 'shop'),
@@ -91,6 +95,8 @@ class PartnerOrders(APIView):
 
 class BasketView(APIView):
     """ Класс для работы с корзиной пользователя. """
+
+    throttle_scope = 'user'
 
     def get(self, request, *args, **kwargs):
         """

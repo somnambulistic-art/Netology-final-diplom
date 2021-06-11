@@ -16,6 +16,8 @@ class RegisterAccount(APIView):
     Класс для регистрации покупателей.
     """
 
+    throttle_scope = 'register'
+
     def post(self, request, *args, **kwargs):
         """
         Метод проверяет наличие обязательных полей, сложность пароля,
@@ -53,6 +55,8 @@ class ConfirmAccount(APIView):
     Класс для подтверждения почтового адреса.
     """
 
+    throttle_scope = 'anon'
+
     def post(self, request, *args, **kwargs):
         """
         Метод проверяет наличие обязательных полей, статус токена и адреса почты,
@@ -79,6 +83,8 @@ class AccountDetails(APIView):
     Класс для работы данными пользователя.
     """
 
+    # throttle_scope = 'user'
+
     def get(self, request, *args, **kwargs):
         """
         Метод позволяет получить данные о пользователе.
@@ -95,6 +101,8 @@ class LoginAccount(APIView):
     """
     Класс для авторизации пользователей.
     """
+
+    throttle_scope = 'anon'
 
     def post(self, request, *args, **kwargs):
         """
@@ -117,6 +125,8 @@ class LoginAccount(APIView):
 
 class ContactView(APIView):
     """ Класс для работы с контактами покупателей. """
+
+    throttle_scope = 'user'
 
     def get(self, request, *args, **kwargs):
         """
