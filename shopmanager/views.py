@@ -44,16 +44,16 @@ class ProductInfoViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     ordering = ('product')
 
-    # @extend_schema(request=ProductInfoSerializer, responses={200: ProductInfoSerializer})
-    def get(self, request, *args, **kwargs):
+    @extend_schema(request=ProductInfoSerializer, responses={200: ProductInfoSerializer})
+    def get(self):
         """
         Метод принимает в качестве аргументов параметры для поиска
         и возвращает соответствующие им товары.
         """
 
         query = Q(shop__state=True)
-        shop_id = request.query_params.get('shop_id')
-        category_id = request.query_params.get('category_id')
+        shop_id = self.request.query_params.get('shop_id')
+        category_id = self.request.query_params.get('category_id')
 
         if shop_id:
             query = query & Q(shop_id=shop_id)
@@ -66,9 +66,7 @@ class ProductInfoViewSet(ModelViewSet):
             'shop', 'product__category').prefetch_related(
             'product_parameters__parameter').distinct()
 
-        serializer = ProductInfoSerializer(queryset, many=True)
-
-        return Response(serializer.data)
+        return queryset
 
 
 class PartnerUpdate(APIView):
@@ -89,7 +87,7 @@ class PartnerUpdate(APIView):
             return JsonResponse({'Status': False,
                                  'Error': 'Только для магазинов'}, status=403)
 
-        url = request.data.get('url')
+        url = request.data.get('user_register_url')
         if url:
             validate_url = URLValidator()
             try:

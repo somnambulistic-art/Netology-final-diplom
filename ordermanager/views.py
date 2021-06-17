@@ -7,7 +7,8 @@ from ujson import loads as load_json
 
 from ordermanager.models import Order, OrderItem
 from ordermanager.serializers import OrderSerializer, OrderItemSerializer
-from usermanager.signals import new_order
+from usermanager.models import User
+from api_diplom_final.celery import send_email
 
 
 class OrderView(APIView):
@@ -56,7 +57,13 @@ class OrderView(APIView):
                                          'Errors': 'Неправильно указаны аргументы'})
                 else:
                     if is_updated:
-                        new_order.send(sender=self.__class__, user_id=request.user.id)
+                        # Отправка письма при изменении статуса заказа.
+                        user = User.objects.get(id=request.user.id)
+                        title = 'Уведомление о смене статуса заказа'
+                        message = 'Заказ сформирован.'
+                        email = user.email
+                        send_email.apply_async((title, message, email), countdown=5 * 60)
+
                         return JsonResponse({'Status': True})
 
         return JsonResponse({'Status': False,
